@@ -12,8 +12,11 @@ class MoviesController < ApplicationController
     #initialize session ratings if it is not defined yet
     session[:ratings] = @all_ratings unless session.has_key?(:ratings)
     #get ratings from parameters if they are given
-    session[:ratings] = params[:ratings].keys if params.has_key?(:ratings) and 
-                                                    !params[:ratings].empty?
+    if params.has_key?(:ratings) and !params[:ratings].empty?
+      session[:ratings] = params[:ratings].keys
+    else
+      session[:ratings] = @all_ratings
+    end
     @selected = session[:ratings]
     #get sortby if it is given
     session[:sortby] = params[:sortby] if params.has_key?(:sortby)
